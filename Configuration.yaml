@@ -1,0 +1,59 @@
+
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+mode: rule
+log-level: silent
+allow-lan: true
+external-controller: 0.0.0.0:9090
+bind-address: "*"
+ipv6: true
+dns:
+  enable: true
+  ipv6: true
+  enhanced-mode: redir-host
+  listen: 0.0.0.0:7894
+  fallback-filter:
+    geoip: false
+    ipcidr:
+    - 240.0.0.0/4
+  nameserver:
+    - https://puredns.org/dns-query
+    - tls://puredns.org:853
+  fallback:
+    - tcp://108.137.44.39
+    - tcp://108.137.44.9
+    - 108.137.44.39
+    - 108.137.44.9
+tun:
+  enable: true
+  stack: system 
+  macOS-auto-route: true
+  macOS-auto-detect-interface: true
+  dns-hijack:
+    - tcp://108.137.44.39:53
+experimental:
+  interface-name: en0
+
+proxies:
+  - {name: Trojan German Zoom, server: german.sgcupiriya.live, port: 443, udp: true, type: trojan, password: vpnezbn, sni: webex.com, skip-cert-verify: true}
+  - {name: Trojan Singapore Zoom, server: vpn.sgcupiriya.live, port: 443, udp: true, type: trojan, password: ovh2nt, sni: webex.com, skip-cert-verify: true}
+  - {name: Trojan India Zoom, server: india.rumira.dev, port: 443, udp: true, type: trojan, password: ammobnwasi, sni: webex.com, skip-cert-verify: true}
+  - {name: Trojan Eu Zoom, server: eu.rumira.dev, port: 443, udp: true, type: trojan, password: ammobnwasi, sni: webex.com, skip-cert-verify: true}
+  
+proxy-groups:
+  - name: Dinul-cariya-ge
+    type: load-balance
+    strategy: consistent-hashing
+    url: 'http://www.gstatic.com/generate_204'
+    interval: 300
+    proxies:
+      - Trojan German Zoom
+      - Trojan Singapore Zoom
+      - Trojan India Zoom
+      - Trojan Eu Zoom
+
+
+rules:
+ - MATCH,Dinul-cariya-ge
